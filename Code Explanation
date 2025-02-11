@@ -1,0 +1,59 @@
+CODE EXPLANATION
+
+A.	Libraries:
+1.	WiFi: Allows the ESP32 to connect to a Wi-Fi network.
+2.	WiFiClient: Enables the ESP32 to create a Wi-Fi client and communicate with other devices over the network.
+3.	BlynkSimpleEsp32: Provides the Blynk library for the ESP32, allowing communication with the Blynk server.
+4.	LiquidCrystal_I2C: Enables control of the 20x4 LCD display using the I2C protocol.
+5.	EmonLib: Library for energy monitoring, which provides functions to measure voltage and current.
+6.	EEPROM: Allows storing and retrieving data in the ESP32's EEPROM memory.
+
+B.	Blynk-related definitions and authentication:
+1.	BLYNK_TEMPLATE_ID: The template ID associated with the Blynk project.
+2.	BLYNK_TEMPLATE_NAME: The name of the Blynk project.
+3.	BLYNK_AUTH_TOKEN: The authentication token for connecting the ESP32 to the Blynk server.
+
+C.	Wi-Fi credentials:
+1.	ssid: The name of the Wi-Fi network to connect to.
+2.	pass: The password for the Wi-Fi network.
+
+D.	LCD display initialization:
+1.	A LiquidCrystal_I2C object is created with the I2C address (0x27) and the dimensions of the LCD (20x4).
+
+E.	Energy monitoring object and calibration values:
+1.	An EnergyMonitor object named "emon" is created.
+2.	voltageCalibration: Calibration value for voltage measurement.
+3.	currentCalibration: Calibration value for current measurement.
+
+F.	Variables for energy tracking:
+1.	kWh: Accumulated energy consumption in kilowatt-hours.
+2.	totalCost: Total cost of energy consumption in Taka.
+3.	lastMillis: Stores the previous millis() value for time calculations.
+4.	costPerUnit: Cost per kilowatt-hour in Taka.
+
+G.	Blynk virtual pin assignments:
+1.	VRMS_VIRTUAL_PIN: Virtual pin for displaying voltage RMS.
+2.	IRMS_VIRTUAL_PIN: Virtual pin for displaying current RMS.
+3.	POWER_VIRTUAL_PIN: Virtual pin for displaying power.
+4.	KWH_VIRTUAL_PIN: Virtual pin for displaying energy consumption in kilowatt-hours.
+5.	COST_VIRTUAL_PIN: Virtual pin for displaying the total cost.
+
+H.	Blynk timer event:
+1.	The function myTimerEvent() is executed at a specified interval using the BlynkTimer object.
+2.	Inside the function, the voltage, current, power, energy consumption, and total cost are calculated.
+3.	The values are printed to the Serial Monitor.
+4.	The values are stored in the EEPROM memory.
+5.	The LCD display is updated with the new values.
+6.	The values are sent to the Blynk server using the Blynk.virtualWrite() function.
+
+I.	Setup function:
+1.	The Serial communication is initiated.
+2.	Blynk connection is established using the Blynk.begin() function with the provided authentication token, Wi-Fi credentials, and Blynk server.
+3.	The LCD display is initialized, and the backlight is turned on.
+4.	Energy monitoring is initialized with voltage and current calibration values.
+5.	The Blynk timer interval is set for data logging and display updates.
+6.	A startup message is displayed on the LCD.
+7.	A delay of 3 seconds is added, and the LCD is cleared.
+
+J.	Loop function:
+1.	Blynk.run() and timer.run() are called to handle Blynk communication and timer events.
